@@ -86,16 +86,18 @@ namespace csharpcore
         }
 
         //"Sulfuras", being a legendary item, never has to be sold or decreases in Quality
+        // Official GitHub Requirement: Sulfuras" is alegendary item and as such its Quality is 80 and it never alters.
         [Fact]
         public void legendaryItemDoNothing()
         {
-            IList<Item> Items = new List<Item> { new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 27, Quality = 80 } };
+            IList<Item> Items = new List<Item> { new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 27, Quality = 75 } };
             GildedRose app = new GildedRose(Items);
             app.UpdateQuality();
             Assert.Equal(27, Items[0].SellIn);
             Assert.Equal(80, Items[0].Quality);
         }
 
+        // Increase Quality the older it gets
         [Fact]
         public void concertTicketIncreaseQualityNormal()
         {
@@ -106,6 +108,7 @@ namespace csharpcore
             Assert.Equal(33, Items[0].Quality);
         }
 
+        // Increase 2 when SellIn is low
         [Fact]
         public void concertTicketIncreaseQualityLowSellIn()
         {
@@ -116,6 +119,7 @@ namespace csharpcore
             Assert.Equal(34, Items[0].Quality);
         }
         
+        // Increase 3 when SellIn is very low
         [Fact]
         public void concertTicketIncreaseQualityVeryLowSellIn()
         {
@@ -124,6 +128,28 @@ namespace csharpcore
             app.UpdateQuality();
             Assert.Equal(4, Items[0].SellIn);
             Assert.Equal(35, Items[0].Quality);
+        }
+
+        //  Official GitHub Requirement: "Conjured" items degrade in Quality twice as fast as normal items
+        [Fact]
+        public void conjuredItemDegradeNormal()
+        {
+            IList<Item> Items = new List<Item> { new Item { Name = "Conjured Mana Cake", SellIn = 5, Quality = 32 } };
+            GildedRose app = new GildedRose(Items);
+            app.UpdateQuality();
+            Assert.Equal(4, Items[0].SellIn);
+            Assert.Equal(30, Items[0].Quality);
+        }
+
+        //  Official GitHub Requirement: "Conjured" items degrade in Quality twice as fast as normal items
+        [Fact]
+        public void conjuredItemDegradeZeroSellIn()
+        {
+            IList<Item> Items = new List<Item> { new Item { Name = "Conjured Mana Cake", SellIn = 0, Quality = 32 } };
+            GildedRose app = new GildedRose(Items);
+            app.UpdateQuality();
+            Assert.Equal(-1, Items[0].SellIn);
+            Assert.Equal(28, Items[0].Quality);
         }
 
     }
