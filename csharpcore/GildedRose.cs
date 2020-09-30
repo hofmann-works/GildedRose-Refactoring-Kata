@@ -5,18 +5,18 @@ namespace csharpcore
 {
     public class GildedRose
     {
-        IList<Item> Items;
-        public GildedRose(IList<Item> Items)
+        IList<Item> items;
+        public GildedRose(IList<Item> items)
         {
-            this.Items = Items;
+            this.items = items;
         }
 
         public void UpdateQuality()
         {
-            foreach (Item Item in Items)
+            foreach (Item item in items)
             {
-                    Item.updateQuality();
-                    Item.DecreaseSellIn();                
+                    item.UpdateQuality();
+                    item.DecreaseSellIn();                
             }
         }
     }

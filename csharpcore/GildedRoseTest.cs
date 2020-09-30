@@ -9,7 +9,7 @@ namespace csharpcore
         [Fact]
         public void itemDegradeNormal()
         {
-            IList<Item> Items = new List<Item> { ItemFactory.Build(new Item { Name = "+5 Dexterity Vest", SellIn = 5, Quality = 5 }) };
+            IList<Item> Items = new List<Item> { ItemFactory.Build("+5 Dexterity Vest", 5, 5 ) };
             GildedRose app = new GildedRose(Items);
             app.UpdateQuality();
             Assert.Equal(4, Items[0].SellIn);
@@ -20,7 +20,7 @@ namespace csharpcore
         [Fact]
         public void itemDegradeZeroSellIn()
         {
-            IList<Item> Items = new List<Item> { ItemFactory.Build(new Item { Name = "+5 Dexterity Vest", SellIn = 0, Quality = 5 }) };
+            IList<Item> Items = new List<Item> { ItemFactory.Build("+5 Dexterity Vest",0, 5 ) };
             GildedRose app = new GildedRose(Items);
             app.UpdateQuality();
             Assert.Equal(-1, Items[0].SellIn);
@@ -32,14 +32,14 @@ namespace csharpcore
         public void itemQualityNeverNegative()
         {
             IList<Item> Items = new List<Item> {
-                ItemFactory.Build(new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20}),
-                ItemFactory.Build(new Item {Name = "Aged Brie", SellIn = 2, Quality = 0}),
-                ItemFactory.Build(new Item {Name = "Elixir of the Mongoose", SellIn = 5, Quality = 0}),
-                ItemFactory.Build(new Item {Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80}),
-                ItemFactory.Build(new Item {Name = "Sulfuras, Hand of Ragnaros", SellIn = -1, Quality = 0}),
-                ItemFactory.Build(new Item {Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 15, Quality = 0 }),
-                ItemFactory.Build(new Item {Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 10, Quality = 0 }),
-                ItemFactory.Build(new Item {Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 5, Quality = 0 }),
+                ItemFactory.Build("+5 Dexterity Vest",10, 20),
+                ItemFactory.Build("Aged Brie", 2, 0),
+                ItemFactory.Build("Elixir of the Mongoose", 5, 0),
+                ItemFactory.Build("Sulfuras, Hand of Ragnaros", 0, 80),
+                ItemFactory.Build("Sulfuras, Hand of Ragnaros", -1, 0),
+                ItemFactory.Build("Backstage passes to a TAFKAL80ETC concert", 15, 0 ),
+                ItemFactory.Build("Backstage passes to a TAFKAL80ETC concert", 10, 0 ),
+                ItemFactory.Build("Backstage passes to a TAFKAL80ETC concert", 5, 0 ),
                 };
             GildedRose app = new GildedRose(Items);
             app.UpdateQuality();
@@ -54,7 +54,7 @@ namespace csharpcore
         [Fact]
         public void itemIncreaseQualityNormal()
         {
-            IList<Item> Items = new List<Item> { ItemFactory.Build(new Item { Name = "Aged Brie", SellIn = 5, Quality = 5 }) };
+            IList<Item> Items = new List<Item> { ItemFactory.Build("Aged Brie", 5, 5 ) };
             GildedRose app = new GildedRose(Items);
             app.UpdateQuality();
             Assert.Equal(4, Items[0].SellIn);
@@ -66,7 +66,7 @@ namespace csharpcore
         [Fact]
         public void itemIncreaseQualityZeroSellIn()
         {
-            IList<Item> Items = new List<Item> { ItemFactory.Build(new Item { Name = "Aged Brie", SellIn = 0, Quality = 5 }) };
+            IList<Item> Items = new List<Item> { ItemFactory.Build("Aged Brie", 0, 5 ) };
             GildedRose app = new GildedRose(Items);
             app.UpdateQuality();
             Assert.Equal(-1, Items[0].SellIn);
@@ -78,7 +78,7 @@ namespace csharpcore
         [Fact]
         public void itemIncreaseQualityMax()
         {
-            IList<Item> Items = new List<Item> { ItemFactory.Build(new Item { Name = "Aged Brie", SellIn = 0, Quality = 50 }) };
+            IList<Item> Items = new List<Item> { ItemFactory.Build("Aged Brie", 0, 50 ) };
             GildedRose app = new GildedRose(Items);
             app.UpdateQuality();
             Assert.Equal(-1, Items[0].SellIn);
@@ -90,7 +90,7 @@ namespace csharpcore
         [Fact]
         public void legendaryItemDoNothing()
         {
-            IList<Item> Items = new List<Item> { ItemFactory.Build(new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 27, Quality = 75 }) };
+            IList<Item> Items = new List<Item> { ItemFactory.Build("Sulfuras, Hand of Ragnaros", 27, 75 ) };
             GildedRose app = new GildedRose(Items);
             app.UpdateQuality();
             Assert.Equal(27, Items[0].SellIn);
@@ -101,7 +101,7 @@ namespace csharpcore
         [Fact]
         public void concertTicketIncreaseQualityNormal()
         {
-            IList<Item> Items = new List<Item> { ItemFactory.Build(new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 23, Quality = 32 }) };
+            IList<Item> Items = new List<Item> { ItemFactory.Build("Backstage passes to a TAFKAL80ETC concert",23, 32 ) };
             GildedRose app = new GildedRose(Items);
             app.UpdateQuality();
             Assert.Equal(22, Items[0].SellIn);
@@ -112,7 +112,7 @@ namespace csharpcore
         [Fact]
         public void concertTicketIncreaseQualityLowSellIn()
         {
-            IList<Item> Items = new List<Item> { ItemFactory.Build(new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 10, Quality = 32 }) };
+            IList<Item> Items = new List<Item> { ItemFactory.Build( "Backstage passes to a TAFKAL80ETC concert", 10, 32 ) };
             GildedRose app = new GildedRose(Items);
             app.UpdateQuality();
             Assert.Equal(9, Items[0].SellIn);
@@ -123,7 +123,7 @@ namespace csharpcore
         [Fact]
         public void concertTicketIncreaseQualityVeryLowSellIn()
         {
-            IList<Item> Items = new List<Item> { ItemFactory.Build(new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 5, Quality = 32 }) };
+            IList<Item> Items = new List<Item> { ItemFactory.Build("Backstage passes to a TAFKAL80ETC concert", 5, 32 ) };
             GildedRose app = new GildedRose(Items);
             app.UpdateQuality();
             Assert.Equal(4, Items[0].SellIn);
@@ -134,7 +134,7 @@ namespace csharpcore
         [Fact]
         public void conjuredItemDegradeNormal()
         {
-            IList<Item> Items = new List<Item> { ItemFactory.Build(new Item { Name = "Conjured Mana Cake", SellIn = 5, Quality = 32 }) };
+            IList<Item> Items = new List<Item> { ItemFactory.Build("Conjured Mana Cake", 5, 32 ) };
             GildedRose app = new GildedRose(Items);
             app.UpdateQuality();
             Assert.Equal(4, Items[0].SellIn);
@@ -145,7 +145,7 @@ namespace csharpcore
         [Fact]
         public void conjuredItemDegradeZeroSellIn()
         {
-            IList<Item> Items = new List<Item> { ItemFactory.Build(new Item { Name = "Conjured Mana Cake", SellIn = 0, Quality = 32 }) };
+            IList<Item> Items = new List<Item> { ItemFactory.Build("Conjured Mana Cake", 0, 32 ) };
             GildedRose app = new GildedRose(Items);
             app.UpdateQuality();
             Assert.Equal(-1, Items[0].SellIn);

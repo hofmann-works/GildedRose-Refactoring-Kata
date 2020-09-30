@@ -2,13 +2,22 @@
 
 namespace csharpcore
 {
-    public class Item
+    public abstract class Item
     {
         public string Name { get; set; }
         public int SellIn { get; set; }
         public int Quality { get; set; }
+        private const int MaxQuality = 50;
+        private const int MinQuality = 0;
 
-        protected virtual int getQualityModifier()
+        protected Item(string Name, int SellIn, int Quality)
+        {
+            this.Name = Name;
+            this.SellIn = SellIn;
+            this.Quality = Quality;
+        }
+
+        protected virtual int GetQualityModifier()
         {
             return -1;
         }
@@ -16,36 +25,39 @@ namespace csharpcore
         {
             SellIn -= 1;
         }
-        public virtual void updateQuality()
+        public virtual void UpdateQuality()
         {
-            Quality = Quality + getQualityModifier();
+            Quality = Quality + GetQualityModifier();
 
-            if (Quality > 50)
+            if (Quality > MaxQuality)
             {
-                Quality = 50;
+                Quality = MaxQuality;
             }
-            if (Quality < 0)
+            if (Quality < MinQuality)
             {
-                Quality = 0;
+                Quality = MinQuality;
             }
         }
     }
 
     public class DegradingQualityItem : Item
     {
-        protected override int getQualityModifier()
+        public DegradingQualityItem(string Name, int SellIn, int Quality) : base(Name, SellIn, Quality) { }
+        protected override int GetQualityModifier()
         {
             if (SellIn <= 0)
             {
-                return base.getQualityModifier()*2;
+                return base.GetQualityModifier()*2;
             }
-            return base.getQualityModifier();
+            return base.GetQualityModifier();
         }
     }
 
     public class IncreasingQualityItem : Item
     {
-        protected override int getQualityModifier()
+        public IncreasingQualityItem(string Name, int SellIn, int Quality) : base(Name, SellIn, Quality) { }
+
+        protected override int GetQualityModifier()
         {
             if (SellIn <= 0)
             {
@@ -57,11 +69,12 @@ namespace csharpcore
 
     public class LegendaryItem : Item
     {
+        public LegendaryItem(string Name, int SellIn, int Quality) : base(Name, SellIn, Quality) { }
         public override void DecreaseSellIn()
         {
             // do nothing
         }
-        public override void updateQuality()
+        public override void UpdateQuality()
         {
             Quality = 80;
         }
@@ -69,7 +82,8 @@ namespace csharpcore
 
     public class ConcertTicket : Item
     {
-        protected override int getQualityModifier()
+        public ConcertTicket(string Name, int SellIn, int Quality) : base(Name, SellIn, Quality) { }
+        protected override int GetQualityModifier()
         {
             //  Quality drops to 0 after the concert.
             if (SellIn <= 0)
@@ -94,9 +108,10 @@ namespace csharpcore
 
     public class ConjuredItem : DegradingQualityItem
     {
-        protected override int getQualityModifier()
+        public ConjuredItem(string Name, int SellIn, int Quality) : base(Name, SellIn, Quality) { }
+        protected override int GetQualityModifier()
         {
-            return base.getQualityModifier()*2;
+            return base.GetQualityModifier()*2;
         }
     }
 }

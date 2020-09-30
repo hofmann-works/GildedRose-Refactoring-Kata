@@ -2,20 +2,20 @@ namespace csharpcore
 {
     public static class ItemFactory
     {
-        public static Item Build(Item Item)
+        public static Item Build(string name, int sellIn, int quality)
         {
-            switch (Item.Name)
+            switch (name)
                 {
                     case "Aged Brie":
-                        return new IncreasingQualityItem {Name = Item.Name, SellIn = Item.SellIn, Quality = Item.Quality};
+                        return new IncreasingQualityItem(name, sellIn, quality);
                     case "Sulfuras, Hand of Ragnaros":
-                        return new LegendaryItem {Name = Item.Name, SellIn = Item.SellIn, Quality = Item.Quality};
+                        return new LegendaryItem (name, sellIn, quality);
                     case "Backstage passes to a TAFKAL80ETC concert":
-                        return new ConcertTicket {Name = Item.Name, SellIn = Item.SellIn, Quality = Item.Quality};
+                        return new ConcertTicket (name, sellIn, quality);
                    case "Conjured Mana Cake":
-                         return new ConjuredItem {Name = Item.Name, SellIn = Item.SellIn, Quality = Item.Quality};
+                         return new ConjuredItem (name, sellIn, quality);
                     default:
-                        return new DegradingQualityItem {Name = Item.Name, SellIn = Item.SellIn, Quality = Item.Quality};
+                        return new DegradingQualityItem (name, sellIn, quality);
                 }
         }
     }
